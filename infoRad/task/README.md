@@ -1,2 +1,0 @@
-# task
-InfoRad's task 
