@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!-- https://www.youtube.com/watch?v=QJaSYyxa0H4 -->
+<html>
+    <head>
+        <title>JS Read csv</title>
+        <style>
+            *{
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                box-sizing: border-box;
+            }
+            table{
+                border-collapse: collapse;
+            }
+            table td{
+                padding: 10px;
+                border: 1px solid;
+            }
+        </style>
+        <script></script>
+    </head>
+    <body>
+        <!-- FILE PICKER-->
+        <input type="file" accept=".csv" id="picker">
+        <input type="button" id="btnsubmit" value="clear" onclick="clearValues();" >
+        
+        <table id="table"></table>
+
+        <script>
+            function clearValues(){
+                console.log("clear table + select another file");
+                var tb  = document.getElementById("table");
+                tb.innerHTML = "" ;   
+            }
+            window.onload = () => {
+                // FILE + HTML ELEMENTS
+                var reader = new FileReader(),
+                    picker = document.getElementById("picker"),
+                    table = document.getElementById("table");
+                
+                // read csv
+                picker.onchange = () => reader.readAsText(picker.files[0]);
+                
+                // read the csv file & generate HTML
+                reader.onload = () => {
+                    // entire csv file
+                    let csv = reader.result;
+
+                    // clear html table
+                    table.inderHTML = " ";
+
+                    // split & put into rows
+                    let rows = csv.split("\r\n");
+
+                    // loop rows + split by colums
+                    for (let row of rows){
+                        // https://thegermancoder.com/2018/11/29/how-to-parse-csv-with-javascript/
+                        let cols = row.match(/(?:\"([^\"]*(?:\"\"[^\"]*)*)\")|([^\",]+)/g);
+                        console.log(cols);
+                        if(cols != null){
+                            let tr = table.insertRow();
+                            for(let col of cols){
+                                let td = tr.insertCell();
+                                td.innerHTML = col.replace(/(^"|"$)/g, "");
+                            }
+                        }
+                    }
+
+                }
+
+            }
+        </script>
+    </body>
+</html>
