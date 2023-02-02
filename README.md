@@ -1,6 +1,7 @@
 # task
 
-InfoRad's task for data logging
+InfoRad's task using CSV files
+
 
 index.html is created by readCSV.py. It changes depending on what CSV file has been choose.
 
